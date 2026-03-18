@@ -2,9 +2,9 @@
 
 require "fileutils"
 
-module Bottle
+module Outset
   class Config
-    CONFIG_DIR  = File.expand_path("~/.bottle")
+    CONFIG_DIR  = File.expand_path("~/.outset")
     CONFIG_FILE = File.join(CONFIG_DIR, "config.toml")
 
     DEFAULTS = {
@@ -16,7 +16,6 @@ module Bottle
       "skip" => {
         "rubocop"  => false,
         "brakeman" => false,
-        "hotwire"  => false,
         "docker"   => false
       },
       "gems" => {
@@ -45,9 +44,9 @@ module Bottle
     def self.resolve(options = {})
       config = load
       {
-        "database"   => options[:database]          || ENV["BOTTLE_DATABASE"] || config.dig("defaults", "database"),
-        "css"        => options[:css]               || ENV["BOTTLE_CSS"]      || config.dig("defaults", "css"),
-        "javascript" => options[:js]                || ENV["BOTTLE_JS"]       || config.dig("defaults", "javascript"),
+        "database"   => options[:database]           || ENV["OUTSET_DATABASE"] || config.dig("defaults", "database"),
+        "css"        => options[:css]                || ENV["OUTSET_CSS"]      || config.dig("defaults", "css"),
+        "javascript" => options[:js]                 || ENV["OUTSET_JS"]       || config.dig("defaults", "javascript"),
         "gems"       => config.dig("gems", "always") || []
       }
     end
@@ -62,7 +61,7 @@ module Bottle
 
     def self.default_toml
       <<~TOML
-        # ~/.bottle/config.toml
+        # ~/.outset/config.toml
         # Edit this file to set your personal defaults.
 
         [defaults]
@@ -73,7 +72,6 @@ module Bottle
         [skip]
         rubocop  = false
         brakeman = false
-        hotwire  = false
         docker   = false
 
         [gems]

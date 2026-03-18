@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Bottle
+module Outset
   module Commands
     class Doctor
       CHECKS = [
@@ -30,9 +30,9 @@ module Bottle
           fix:   "Run: git config --global user.email 'you@example.com'"
         },
         {
-          name: "Bottle config file",
+          name: "Outset config file",
           check: -> { File.exist?(Config::CONFIG_FILE) },
-          fix:   "Run: bottle config init"
+          fix:   "Run: outset config init"
         }
       ].freeze
 
@@ -51,9 +51,9 @@ module Bottle
 
         puts
         if all_passed
-          UI.success("All checks passed. You're ready to use bottle!")
+          UI.success("All checks passed. You're ready to use outset!")
         else
-          UI.warn("Some checks failed. Fix the issues above and run `bottle doctor` again.")
+          UI.warn("Some checks failed. Fix the issues above and run `outset doctor` again.")
         end
       end
     end

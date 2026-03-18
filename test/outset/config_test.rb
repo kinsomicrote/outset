@@ -13,26 +13,26 @@ class ConfigTest < Minitest::Test
   # ── Config.resolve precedence ────────────────────────────────────────────
 
   def test_cli_flag_wins_over_env_and_config
-    with_env("BOTTLE_DATABASE" => "sqlite3") do
-      Bottle::Config.stub(:load, STUB_CONFIG) do
-        result = Bottle::Config.resolve(database: "postgresql")
+    with_env("OUTSET_DATABASE" => "sqlite3") do
+      Outset::Config.stub(:load, STUB_CONFIG) do
+        result = Outset::Config.resolve(database: "postgresql")
         assert_equal "postgresql", result["database"]
       end
     end
   end
 
   def test_env_var_wins_over_config_file
-    with_env("BOTTLE_DATABASE" => "sqlite3") do
-      Bottle::Config.stub(:load, STUB_CONFIG) do
-        result = Bottle::Config.resolve({})
+    with_env("OUTSET_DATABASE" => "sqlite3") do
+      Outset::Config.stub(:load, STUB_CONFIG) do
+        result = Outset::Config.resolve({})
         assert_equal "sqlite3", result["database"]
       end
     end
   end
 
   def test_config_file_wins_over_built_in_defaults
-    Bottle::Config.stub(:load, STUB_CONFIG) do
-      result = Bottle::Config.resolve({})
+    Outset::Config.stub(:load, STUB_CONFIG) do
+      result = Outset::Config.resolve({})
       assert_equal "mysql",    result["database"]
       assert_equal "bootstrap", result["css"]
       assert_equal "esbuild",  result["javascript"]
@@ -40,9 +40,9 @@ class ConfigTest < Minitest::Test
   end
 
   def test_built_in_defaults_used_when_nothing_else_set
-    bare_config = { "defaults" => Bottle::Config::DEFAULTS["defaults"], "gems" => { "always" => [] } }
-    Bottle::Config.stub(:load, bare_config) do
-      result = Bottle::Config.resolve({})
+    bare_config = { "defaults" => Outset::Config::DEFAULTS["defaults"], "gems" => { "always" => [] } }
+    Outset::Config.stub(:load, bare_config) do
+      result = Outset::Config.resolve({})
       assert_equal "postgresql", result["database"]
       assert_equal "tailwind",   result["css"]
       assert_equal "importmap",  result["javascript"]
@@ -50,8 +50,8 @@ class ConfigTest < Minitest::Test
   end
 
   def test_always_gems_included_in_resolved_config
-    Bottle::Config.stub(:load, STUB_CONFIG) do
-      result = Bottle::Config.resolve({})
+    Outset::Config.stub(:load, STUB_CONFIG) do
+      result = Outset::Config.resolve({})
       assert_equal ["annotate"], result["gems"]
     end
   end

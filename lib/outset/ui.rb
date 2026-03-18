@@ -2,19 +2,19 @@
 
 require "pastel"
 
-module Bottle
+module Outset
   module UI
     PASTEL = Pastel.new
 
     def self.banner
       puts PASTEL.bold.blue(<<~BANNER)
-         _           _   _   _
-        | |__   ___ | |_| |_| | ___
-        | '_ \\ / _ \\| __| __| |/ _ \\
-        | |_) | (_) | |_| |_| |  __/
-        |_.__/ \\___/ \\__|\\__|_|\\___|
+          ___   _   _  _____  ____   _____  _____
+         / _ \\ | | | ||_   _|/ ___| | ____|_   _|
+        | | | || | | |  | |  \\___ \\ |  _|    | |
+        | |_| || |_| |  | |   ___) || |___   | |
+         \\___/  \\___/   |_|  |____/ |_____|  |_|
       BANNER
-      puts PASTEL.dim("  Rails Application Bootstrapper v#{Bottle::VERSION}")
+      puts PASTEL.dim("  Rails Application Bootstrapper v#{Outset::VERSION}")
       puts
     end
 

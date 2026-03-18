@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Bottle
+module Outset
   module Commands
     class ConfigCmd
       def initialize(action)
@@ -28,7 +28,7 @@ module Bottle
           puts
           puts File.read(Config::CONFIG_FILE)
         else
-          UI.warn("No config file found. Run `bottle config init` to create one.")
+          UI.warn("No config file found. Run `outset config init` to create one.")
           puts
           UI.muted("Default values:")
           puts Config.default_toml

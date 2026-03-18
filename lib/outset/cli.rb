@@ -5,7 +5,7 @@ require_relative "commands/new"
 require_relative "commands/config_cmd"
 require_relative "commands/doctor"
 
-module Bottle
+module Outset
   class CLI < Thor
     def self.exit_on_failure? = true
 
@@ -20,20 +20,20 @@ module Bottle
       Commands::New.new(app_name, options).run
     end
 
-    desc "config [ACTION]", "View or edit your bottle config (~/.bottle/config.toml)"
+    desc "config [ACTION]", "View or edit your outset config (~/.outset/config.toml)"
     def config(action = "show")
       Commands::ConfigCmd.new(action).run
     end
 
-    desc "doctor", "Check that your environment is ready to use bottle"
+    desc "doctor", "Check that your environment is ready to use outset"
     def doctor
       UI.banner
       Commands::Doctor.new.run
     end
 
-    desc "version", "Print bottle version"
+    desc "version", "Print outset version"
     def version
-      puts "bottle v#{Bottle::VERSION}"
+      puts "outset v#{Outset::VERSION}"
     end
 
     map %w[--version -v] => :version

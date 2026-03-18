@@ -83,12 +83,12 @@ class NewCommandTest < Minitest::Test
   def test_template_includes_git_commit
     template = build_cmd("test_app").send(:build_template, [])
     assert_includes template, "git add:"
-    assert_includes template, "Initial scaffold via bottle"
+    assert_includes template, "Initial scaffold via outset"
   end
 
   private
 
   def build_cmd(app_name, options = @valid_options)
-    Bottle::Commands::New.new(app_name, options)
+    Outset::Commands::New.new(app_name, options)
   end
 end
