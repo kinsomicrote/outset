@@ -33,6 +33,52 @@ class RecipesTest < Minitest::Test
     assert_raises(SystemExit) { Outset::Recipes.find("nonexistent") }
   end
 
+  # ── User recipes from config ──────────────────────────────────────────────
+
+  def test_user_recipe_is_found
+    stub_config = { "recipes" => { "mystartup" => {
+      "description" => "My startup", "database" => "mysql",
+      "css" => "bootstrap", "js" => "esbuild", "gems" => ["devise"]
+    }}}
+    Outset::Config.stub(:load, stub_config) do
+      recipe = Outset::Recipes.find("mystartup")
+      assert_equal "mysql",     recipe[:database]
+      assert_equal "bootstrap", recipe[:css]
+      assert_equal "esbuild",   recipe[:js]
+    end
+  end
+
+  def test_user_recipe_keys_are_symbolized
+    stub_config = { "recipes" => { "myrecipe" => {
+      "database" => "sqlite3", "css" => "none", "js" => "importmap", "gems" => []
+    }}}
+    Outset::Config.stub(:load, stub_config) do
+      recipe = Outset::Recipes.find("myrecipe")
+      assert recipe.key?(:database), "expected symbol key :database"
+    end
+  end
+
+  def test_all_includes_user_recipes
+    stub_config = { "recipes" => { "custom" => {
+      "database" => "postgresql", "css" => "tailwind",
+      "js" => "importmap", "gems" => []
+    }}}
+    Outset::Config.stub(:load, stub_config) do
+      assert_includes Outset::Recipes.all.keys, "custom"
+      assert_includes Outset::Recipes.all.keys, "saas"
+    end
+  end
+
+  def test_user_recipe_defaults_missing_fields
+    stub_config = { "recipes" => { "sparse" => { "database" => "sqlite3" } } }
+    Outset::Config.stub(:load, stub_config) do
+      recipe = Outset::Recipes.find("sparse")
+      assert_equal "tailwind",  recipe[:css]
+      assert_equal "importmap", recipe[:js]
+      assert_equal [],          recipe[:gems]
+    end
+  end
+
   # ── Recipe selections in New command ─────────────────────────────────────
 
   def test_recipe_sets_database

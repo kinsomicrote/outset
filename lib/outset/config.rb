@@ -79,6 +79,14 @@ module Outset
 
         [recipes]
         default = ""  # Name of your default recipe, e.g. "saas"
+
+        # Define custom recipes (uncomment and edit to add your own):
+        # [recipes.mystartup]
+        # description = "My startup stack"
+        # database    = "postgresql"
+        # css         = "tailwind"
+        # js          = "esbuild"
+        # gems        = ["devise", "sidekiq", "pagy"]
       TOML
     end
 
