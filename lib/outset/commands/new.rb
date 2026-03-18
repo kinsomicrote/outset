@@ -31,7 +31,9 @@ module Outset
         validate_app_name!
         validate_rails_installed!
 
-        selections = if @options[:yes]
+        selections = if @options[:recipe]
+                       recipe_selections
+                     elsif @options[:yes]
                        default_selections
                      else
                        prompt_user
@@ -60,6 +62,18 @@ module Outset
           UI.error("Rails is not installed. Run: gem install rails")
           exit(1)
         end
+      end
+
+      def recipe_selections
+        recipe = Recipes.find(@options[:recipe])
+        UI.info("Using recipe: #{@options[:recipe]} — #{recipe[:description]}")
+        puts
+        {
+          database: @options[:database] || recipe[:database],
+          css:      @options[:css]      || recipe[:css],
+          js:       @options[:js]       || recipe[:js],
+          gems:     (recipe[:gems] + @resolved["gems"]).uniq
+        }
       end
 
       def default_selections
@@ -111,6 +125,7 @@ module Outset
       def confirm_and_run(selections)
         puts
         UI.info("Ready to create '#{@app_name}' with:")
+        UI.muted("  Recipe   : #{@options[:recipe]}") if @options[:recipe]
         UI.muted("  Database : #{selections[:database]}")
         UI.muted("  CSS      : #{selections[:css]}")
         UI.muted("  JS       : #{selections[:js]}")

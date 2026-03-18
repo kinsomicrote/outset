@@ -4,6 +4,7 @@ require "thor"
 require_relative "commands/new"
 require_relative "commands/config_cmd"
 require_relative "commands/doctor"
+require_relative "recipes"
 
 module Outset
   class CLI < Thor
@@ -29,6 +30,17 @@ module Outset
     def doctor
       UI.banner
       Commands::Doctor.new.run
+    end
+
+    desc "recipes", "List available recipes"
+    def recipes
+      UI.info("Available recipes:")
+      puts
+      Recipes.all.each do |name, recipe|
+        puts "  #{UI::PASTEL.bold(name.ljust(10))} #{recipe[:description]}"
+        UI.muted("    db=#{recipe[:database]}  css=#{recipe[:css]}  js=#{recipe[:js]}  gems=#{recipe[:gems].empty? ? "none" : recipe[:gems].join(", ")}")
+        puts
+      end
     end
 
     desc "version", "Print outset version"
