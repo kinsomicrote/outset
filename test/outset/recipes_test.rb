@@ -101,9 +101,14 @@ class RecipesTest < Minitest::Test
   end
 
   def test_minimal_recipe_has_no_gems
-    cmd = build_cmd("test_app", recipe: "minimal")
-    selections = cmd.send(:recipe_selections)
-    assert_empty selections[:gems]
+    Outset::Config.stub(:resolve, {
+      "database" => "sqlite3", "css" => "none",
+      "javascript" => "importmap", "gems" => []
+    }) do
+      cmd = build_cmd("test_app", recipe: "minimal")
+      selections = cmd.send(:recipe_selections)
+      assert_empty selections[:gems]
+    end
   end
 
   def test_always_gems_merged_with_recipe_gems
