@@ -42,6 +42,16 @@ module Bottle
       DEFAULTS.dup
     end
 
+    def self.resolve(options = {})
+      config = load
+      {
+        "database"   => options[:database]          || ENV["BOTTLE_DATABASE"] || config.dig("defaults", "database"),
+        "css"        => options[:css]               || ENV["BOTTLE_CSS"]      || config.dig("defaults", "css"),
+        "javascript" => options[:js]                || ENV["BOTTLE_JS"]       || config.dig("defaults", "javascript"),
+        "gems"       => config.dig("gems", "always") || []
+      }
+    end
+
     def self.init!
       return if File.exist?(CONFIG_FILE)
 

@@ -23,7 +23,7 @@ module Bottle
       def initialize(app_name, options = {})
         @app_name = app_name
         @options  = options
-        @config   = Config.load
+        @resolved = Config.resolve(options)
         @prompt   = TTY::Prompt.new(interrupt: :exit)
       end
 
@@ -63,12 +63,11 @@ module Bottle
       end
 
       def default_selections
-        defaults = @config["defaults"]
         {
-          database: @options[:database] || defaults["database"],
-          css:      defaults["css"],
-          js:       defaults["javascript"],
-          gems:     @config.dig("gems", "always") || []
+          database: @resolved["database"],
+          css:      @resolved["css"],
+          js:       @resolved["javascript"],
+          gems:     @resolved["gems"]
         }
       end
 
@@ -77,15 +76,15 @@ module Bottle
         puts
 
         database = @prompt.select("Database:", DATABASES,
-                                  default: @options[:database] || @config.dig("defaults", "database"))
+                                  default: @resolved["database"])
 
         css = @prompt.select("CSS framework:", CSS_OPTIONS,
-                             default: @config.dig("defaults", "css"))
+                             default: @resolved["css"])
 
         js = @prompt.select("JavaScript bundler:", JS_OPTIONS,
-                            default: @config.dig("defaults", "javascript"))
+                            default: @resolved["javascript"])
 
-        always_gems = @config.dig("gems", "always") || []
+        always_gems = @resolved["gems"]
         gems = @prompt.multi_select("Optional gems: (space to select, enter to confirm)") do |menu|
           OPTIONAL_GEMS.each do |gem_opt|
             preselected = always_gems.include?(gem_opt[:value])

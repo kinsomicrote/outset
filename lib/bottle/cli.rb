@@ -11,6 +11,8 @@ module Bottle
 
     desc "new APP_NAME", "Bootstrap a new Rails application"
     option :database, aliases: "-d", type: :string,  default: nil,   desc: "Database (postgresql, mysql, sqlite3)"
+    option :css,      aliases: "-c", type: :string,  default: nil,   desc: "CSS framework (tailwind, bootstrap, sass, postcss, none)"
+    option :js,       aliases: "-j", type: :string,  default: nil,   desc: "JavaScript bundler (importmap, esbuild, bun, webpack, rollup)"
     option :recipe,   aliases: "-r", type: :string,  default: nil,   desc: "Use a predefined recipe"
     option :yes,      aliases: "-y", type: :boolean, default: false, desc: "Accept all defaults, skip prompts"
     def new(app_name)
