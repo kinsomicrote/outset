@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "tty-prompt"
+require "tmpdir"
 
 module Bottle
   module Commands
@@ -10,14 +11,13 @@ module Bottle
       JS_OPTIONS  = %w[importmap esbuild bun webpack rollup].freeze
 
       OPTIONAL_GEMS = [
-        { name: "Devise (Authentication)",     value: "devise"           },
-        { name: "Pundit (Authorization)",      value: "pundit"           },
-        { name: "Sidekiq (Background Jobs)",   value: "sidekiq"          },
-        { name: "RSpec + FactoryBot (Tests)",  value: "rspec"            },
-        { name: "Annotate (Model Annotations)",value: "annotate"         },
-        { name: "Letter Opener (Email preview)",value: "letter_opener"   },
-        { name: "Pagy (Pagination)",           value: "pagy"             },
-        { name: "Hotwire (Turbo + Stimulus)",  value: "hotwire"          },
+        { name: "Devise (Authentication)",      value: "devise"        },
+        { name: "Pundit (Authorization)",       value: "pundit"        },
+        { name: "Sidekiq (Background Jobs)",    value: "sidekiq"       },
+        { name: "RSpec + FactoryBot (Tests)",   value: "rspec"         },
+        { name: "Annotate (Model Annotations)", value: "annotate"      },
+        { name: "Letter Opener (Email preview)",value: "letter_opener" },
+        { name: "Pagy (Pagination)",            value: "pagy"          },
       ].freeze
 
       def initialize(app_name, options = {})
@@ -123,7 +123,7 @@ module Bottle
         UI.info("Running: #{cmd}")
         puts
 
-        success = system(cmd)
+        success = Bundler.with_unbundled_env { system(cmd) }
 
         File.delete(template_path) if template_path && File.exist?(template_path)
 
