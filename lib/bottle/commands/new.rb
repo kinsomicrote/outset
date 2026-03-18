@@ -75,14 +75,26 @@ module Bottle
         UI.info("Configuring: #{@app_name}")
         puts
 
-        database = @prompt.select("Database:", DATABASES,
-                                  default: @resolved["database"])
+        database = if @options[:database]
+                     UI.muted("  Database: #{@options[:database]} (from flag)")
+                     @options[:database]
+                   else
+                     @prompt.select("Database:", DATABASES, default: @resolved["database"])
+                   end
 
-        css = @prompt.select("CSS framework:", CSS_OPTIONS,
-                             default: @resolved["css"])
+        css = if @options[:css]
+                UI.muted("  CSS: #{@options[:css]} (from flag)")
+                @options[:css]
+              else
+                @prompt.select("CSS framework:", CSS_OPTIONS, default: @resolved["css"])
+              end
 
-        js = @prompt.select("JavaScript bundler:", JS_OPTIONS,
-                            default: @resolved["javascript"])
+        js = if @options[:js]
+               UI.muted("  JS: #{@options[:js]} (from flag)")
+               @options[:js]
+             else
+               @prompt.select("JavaScript bundler:", JS_OPTIONS, default: @resolved["javascript"])
+             end
 
         always_gems = @resolved["gems"]
         gems = @prompt.multi_select("Optional gems: (space to select, enter to confirm)") do |menu|
