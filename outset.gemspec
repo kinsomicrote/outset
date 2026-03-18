@@ -8,10 +8,11 @@ Gem::Specification.new do |spec|
   spec.authors = ["Kingsley Chijioke"]
   spec.email   = ["dev@kingsleychijioke.me"]
 
+  spec.license     = "MIT"
   spec.summary     = "Bootstrap new Rails applications your way"
   spec.description = "A personal Rails application bootstrapper with interactive prompts, " \
                      "a config file, and predefined recipes — callable as `outset new <app_name>`."
-  spec.homepage    = "https://github.com/yourusername/outset"
+  spec.homepage    = "https://github.com/kinsomicrote/outset"
 
   spec.required_ruby_version = ">= 3.1.0"
 
