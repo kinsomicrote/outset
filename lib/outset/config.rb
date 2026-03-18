@@ -43,11 +43,14 @@ module Outset
 
     def self.resolve(options = {})
       config = load
+      default_recipe = config.dig("recipes", "default")
+      default_recipe = nil if default_recipe.nil? || default_recipe.to_s.strip.empty?
       {
-        "database"   => options[:database]           || ENV["OUTSET_DATABASE"] || config.dig("defaults", "database"),
-        "css"        => options[:css]                || ENV["OUTSET_CSS"]      || config.dig("defaults", "css"),
-        "javascript" => options[:js]                 || ENV["OUTSET_JS"]       || config.dig("defaults", "javascript"),
-        "gems"       => config.dig("gems", "always") || []
+        "database"       => options[:database]           || ENV["OUTSET_DATABASE"] || config.dig("defaults", "database"),
+        "css"            => options[:css]                || ENV["OUTSET_CSS"]      || config.dig("defaults", "css"),
+        "javascript"     => options[:js]                 || ENV["OUTSET_JS"]       || config.dig("defaults", "javascript"),
+        "gems"           => config.dig("gems", "always") || [],
+        "default_recipe" => default_recipe
       }
     end
 

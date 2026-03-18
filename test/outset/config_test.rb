@@ -56,6 +56,22 @@ class ConfigTest < Minitest::Test
     end
   end
 
+  def test_resolve_includes_default_recipe_when_set
+    config_with_recipe = STUB_CONFIG.merge("recipes" => { "default" => "saas" })
+    Outset::Config.stub(:load, config_with_recipe) do
+      result = Outset::Config.resolve({})
+      assert_equal "saas", result["default_recipe"]
+    end
+  end
+
+  def test_resolve_default_recipe_is_nil_when_empty_string
+    config_with_blank = STUB_CONFIG.merge("recipes" => { "default" => "" })
+    Outset::Config.stub(:load, config_with_blank) do
+      result = Outset::Config.resolve({})
+      assert_nil result["default_recipe"]
+    end
+  end
+
   private
 
   def with_env(vars)

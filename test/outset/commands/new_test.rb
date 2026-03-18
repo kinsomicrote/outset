@@ -86,6 +86,46 @@ class NewCommandTest < Minitest::Test
     assert_includes template, "Initial scaffold via outset"
   end
 
+  # ── Default recipe from config ───────────────────────────────────────────
+
+  def test_effective_recipe_returns_flag_when_set
+    cmd = build_cmd("test_app", { recipe: "saas" })
+    assert_equal "saas", cmd.send(:effective_recipe)
+  end
+
+  def test_effective_recipe_falls_back_to_config_default
+    Outset::Config.stub(:resolve, {
+      "database" => "postgresql", "css" => "tailwind",
+      "javascript" => "importmap", "gems" => [],
+      "default_recipe" => "minimal"
+    }) do
+      cmd = build_cmd("test_app", {})
+      assert_equal "minimal", cmd.send(:effective_recipe)
+    end
+  end
+
+  def test_effective_recipe_is_nil_when_nothing_set
+    Outset::Config.stub(:resolve, {
+      "database" => "postgresql", "css" => "tailwind",
+      "javascript" => "importmap", "gems" => [],
+      "default_recipe" => nil
+    }) do
+      cmd = build_cmd("test_app", {})
+      assert_nil cmd.send(:effective_recipe)
+    end
+  end
+
+  def test_cli_flag_wins_over_config_default_recipe
+    Outset::Config.stub(:resolve, {
+      "database" => "postgresql", "css" => "tailwind",
+      "javascript" => "importmap", "gems" => [],
+      "default_recipe" => "minimal"
+    }) do
+      cmd = build_cmd("test_app", { recipe: "saas" })
+      assert_equal "saas", cmd.send(:effective_recipe)
+    end
+  end
+
   private
 
   def build_cmd(app_name, options = @valid_options)

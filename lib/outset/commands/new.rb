@@ -31,7 +31,7 @@ module Outset
         validate_app_name!
         validate_rails_installed!
 
-        selections = if @options[:recipe]
+        selections = if effective_recipe
                        recipe_selections
                      elsif @options[:yes]
                        default_selections
@@ -43,6 +43,10 @@ module Outset
       end
 
       private
+
+      def effective_recipe
+        @options[:recipe] || @resolved["default_recipe"]
+      end
 
       def validate_app_name!
         unless @app_name.match?(/\A[a-z][a-z0-9_]*\z/)
@@ -65,8 +69,9 @@ module Outset
       end
 
       def recipe_selections
-        recipe = Recipes.find(@options[:recipe])
-        UI.info("Using recipe: #{@options[:recipe]} — #{recipe[:description]}")
+        name   = effective_recipe
+        recipe = Recipes.find(name)
+        UI.info("Using recipe: #{name} — #{recipe[:description]}")
         puts
         {
           database: @options[:database] || recipe[:database],
@@ -125,7 +130,7 @@ module Outset
       def confirm_and_run(selections)
         puts
         UI.info("Ready to create '#{@app_name}' with:")
-        UI.muted("  Recipe   : #{@options[:recipe]}") if @options[:recipe]
+        UI.muted("  Recipe   : #{effective_recipe}") if effective_recipe
         UI.muted("  Database : #{selections[:database]}")
         UI.muted("  CSS      : #{selections[:css]}")
         UI.muted("  JS       : #{selections[:js]}")
