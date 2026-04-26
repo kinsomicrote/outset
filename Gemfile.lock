@@ -4,7 +4,7 @@ PATH
     outset (0.1.0)
       pastel (~> 0.8)
       thor (~> 1.3)
-      toml-rb (~> 3.0)
+      toml-rb (>= 3, < 5)
       tty-prompt (~> 0.23)
 
 GEM
@@ -25,7 +25,7 @@ GEM
     rake (13.3.1)
     ruby-progressbar (1.13.0)
     thor (1.5.0)
-    toml-rb (3.0.1)
+    toml-rb (4.1.0)
       citrus (~> 3.0, > 3.0)
       racc (~> 1.7)
     tty-color (0.6.0)
@@ -62,7 +62,7 @@ CHECKSUMS
   rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
-  toml-rb (3.0.1) sha256=a3a764dcdd85e7b51207f72b0743f109474bb1bea3c54a392ae32903263200b2
+  toml-rb (4.1.0) sha256=14456ec4549e4703881bf04b83a56f3264ef99884880092d83c98a2058d95846
   tty-color (0.6.0) sha256=6f9c37ca3a4e2367fb2e6d09722762647d6f455c111f05b59f35730eeb24332a
   tty-cursor (0.7.1) sha256=79534185e6a777888d88628b14b6a1fdf5154a603f285f80b1753e1908e0bf48
   tty-prompt (0.23.1) sha256=fcdbce905238993f27eecfdf67597a636bc839d92192f6a0eef22b8166449ec8
