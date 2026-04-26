@@ -22,7 +22,7 @@ GEM
     pastel (0.8.0)
       tty-color (~> 0.5)
     racc (1.8.1)
-    rake (13.3.1)
+    rake (13.4.2)
     ruby-progressbar (1.13.0)
     thor (1.5.0)
     toml-rb (3.0.1)
@@ -48,7 +48,7 @@ DEPENDENCIES
   minitest (~> 5.20)
   minitest-reporters (~> 1.6)
   outset!
-  rake (~> 13.0)
+  rake (~> 13.4, ~> 13.0)
 
 CHECKSUMS
   ansi (1.5.0) sha256=5408253274e33d9d27d4a98c46d2998266fd51cba58a7eb9d08f50e57ed23592
@@ -59,7 +59,7 @@ CHECKSUMS
   outset (0.1.0)
   pastel (0.8.0) sha256=481da9fb7d2f6e6b1a08faf11fa10363172dc40fd47848f096ae21209f805a75
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
-  rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
+  rake (13.4.2) sha256=cb825b2bd5f1f8e91ca37bddb4b9aaf345551b4731da62949be002fa89283701
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
   toml-rb (3.0.1) sha256=a3a764dcdd85e7b51207f72b0743f109474bb1bea3c54a392ae32903263200b2
