@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "thor",       "~> 1.3"
   spec.add_dependency "tty-prompt", "~> 0.23"
-  spec.add_dependency "toml-rb",    "~> 3.0"
+  spec.add_dependency "toml-rb",    ">= 3", "< 5"
   spec.add_dependency "pastel",     "~> 0.8"
 
   spec.add_development_dependency "minitest",           "~> 5.20"
